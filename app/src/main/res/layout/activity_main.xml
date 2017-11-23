@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.liangfeng.mbrowser.view.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/contains"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/tools"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:contextClickable="true"
+            android:id="@+id/ivWindows"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:src="@mipmap/windows"
+            android:layout_width="0dp"
+            android:layout_height="30dp" />
+
+         <ImageView
+             android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:src="@mipmap/tool_arrow"
+            android:layout_width="0dp"
+            android:layout_height="30dp" />
+
+         <ImageView
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:src="@mipmap/tool_menu"
+            android:layout_width="0dp"
+            android:layout_height="30dp" />
+
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_above="@id/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>
