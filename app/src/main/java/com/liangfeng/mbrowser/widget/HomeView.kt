@@ -39,8 +39,6 @@ class HomeView : View {
 
     var canvas: Canvas? = null
 
-    var mListener: OnClickListener? = null
-
     var mHomoViewClick: HomeViewClick? = null
 
     constructor(context: Context) : super(context) {}
@@ -93,11 +91,6 @@ class HomeView : View {
 
     }
 
-   /* override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(700, 130)
-    }*/
-
 
     @SuppressLint("WrongCall")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -141,7 +134,6 @@ class HomeView : View {
                 var x = event.getX()
                 var y = event.getY()
                 if (x > rectLeft && x < rectRight && y < rectBottom && y > rectTop) {
-                    mListener?.onClick(this)
                     mHomoViewClick?.onViewCilik()
                 }else{
 
@@ -151,10 +143,6 @@ class HomeView : View {
         return true//自己处理!!!!!!!
     }
 
-    //重写点击监听，获取监听的引用
-    override fun setOnClickListener(l: OnClickListener?) {
-        mListener = l
-    }
 
     //设置自定义的点击事件监听
     fun setOnHomeViewClick(homoViewClick: HomeViewClick) {

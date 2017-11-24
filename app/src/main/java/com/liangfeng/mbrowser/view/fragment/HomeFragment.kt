@@ -20,9 +20,6 @@ class HomeFragment : BaseFragment(), HomeViewClick {
 
 
     var homeView: HomeView? = null
-    /*var etSearchBar: EditText? = null
-    var contains: RelativeLayout? = null
-    var devidLine: LinearLayout? = null*/
     var ivSearchBar: ImageView? = null
 
     var eventBack: BackEvent? = BackEvent()
@@ -32,17 +29,18 @@ class HomeFragment : BaseFragment(), HomeViewClick {
 
     override fun onViewCilik() {
         Log.e(MYTAG, "666")
-        homeView?.animate()
+        /*homeView?.animate()
                 ?.translationY(50f)
                 ?.setDuration(500)
         Thread.sleep(500)
-        EventBus.getDefault().post(replaceFragment)
+        EventBus.getDefault().post(replaceFragment)*/
 
     }
 
 
     override fun initView() {
         ivSearchBar = rootView?.findViewById<ImageView>(R.id.ivSearchBar)
+//        homeView = rootView?.findViewById<HomeView>(R.id.homeView)
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -57,6 +55,7 @@ class HomeFragment : BaseFragment(), HomeViewClick {
                 EventBus.getDefault().post(replaceFragment)
             }
         }
+        homeView?.setOnHomeViewClick(this)
     }
 
     val MYTAG = "HomeFragment"
