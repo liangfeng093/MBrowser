@@ -3,13 +3,17 @@ package com.liangfeng.mbrowser.view
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.util.Log
 import android.view.View
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.event.EventBack
-import com.liangfeng.mbrowser.event.EventReplaceFragment
+import com.liangfeng.mbrowser.event.BackEvent
+import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
+import com.liangfeng.mbrowser.event.WebEvent
+import com.liangfeng.mbrowser.network.Url
 import com.liangfeng.mbrowser.view.activity.BaseActivity
 import com.liangfeng.mbrowser.view.fragment.HomeFragment
 import com.liangfeng.mbrowser.view.fragment.SearchFragment
+import com.liangfeng.mbrowser.view.fragment.WebFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,12 +35,16 @@ class MainActivity : BaseActivity() {
 
     var homeFragment: HomeFragment? = null
     var searchFragment: SearchFragment? = null
+    var webFragment: WebFragment? = null
+
+    var webEvent: WebEvent? = WebEvent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EventBus.getDefault().register(this)
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.contains, homeFragment)
@@ -51,7 +59,7 @@ class MainActivity : BaseActivity() {
 
     val MYTAG = "MainActivity"
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onHitToolBar1(eventBack: EventBack) {
+    fun onHitToolBar1(eventBack: BackEvent) {
         if (eventBack.isShowToolBar!!) {
             tools.visibility = View.GONE
         } else {
@@ -59,13 +67,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    val mTAG: String = "MainActivity"
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onHitToolBar1(replaceFragment: EventReplaceFragment) {
-
+    fun onHitToolBar1(replaceFragment: ReplaceFragmentEvent) {
+        Log.e(mTAG, "type:" + replaceFragment.type)
         when (replaceFragment.type) {
 
-            EventReplaceFragment.HOME_FRAGMENT -> {
+            ReplaceFragmentEvent.HOME_FRAGMENT -> {
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.contains, homeFragment)
@@ -73,7 +82,7 @@ class MainActivity : BaseActivity() {
                 tools.visibility = View.VISIBLE
             }
 
-            EventReplaceFragment.SEARCH_FRAGMENT -> {
+            ReplaceFragmentEvent.SEARCH_FRAGMENT -> {
 
                 tools.visibility = View.INVISIBLE
                 supportFragmentManager
@@ -81,7 +90,18 @@ class MainActivity : BaseActivity() {
                         .replace(R.id.contains, searchFragment)
                         .commit()
             }
+
+            ReplaceFragmentEvent.WEB_FRAGMENT -> {
+                tools.visibility = View.VISIBLE
+                var url = Url.BAI_DU + "wd="+replaceFragment.keyWords//拼接关键字
+                webFragment = WebFragment(url)
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.contains, webFragment)
+                        .commit()
+            }
         }
+
 
     }
 

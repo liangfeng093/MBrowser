@@ -5,7 +5,7 @@ package com.liangfeng.mbrowser.event
  * Email:liangfeng093@gmail.com
  */
 
-class EventBack {
+class BackEvent {
 
     var isShowToolBar: Boolean? = true
 

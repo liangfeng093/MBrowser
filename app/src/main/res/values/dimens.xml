@@ -5,6 +5,7 @@
     <dimen name="text_size16">16sp</dimen>
     <dimen name="text_size18">18sp</dimen>
 
+    <dimen name="seacrch_bar_marginTop">8dp</dimen>
 
 
 </resources>

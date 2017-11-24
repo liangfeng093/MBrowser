@@ -12,6 +12,7 @@
         android:layout_height="match_parent"/>
 
     <LinearLayout
+        android:background="#fff"
         android:id="@+id/tools"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"

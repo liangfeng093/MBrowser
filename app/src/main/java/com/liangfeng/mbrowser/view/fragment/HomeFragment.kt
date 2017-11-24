@@ -1,14 +1,12 @@
 package com.liangfeng.mbrowser.view.fragment
 
-import android.app.Activity
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.event.EventBack
-import com.liangfeng.mbrowser.event.EventReplaceFragment
+import com.liangfeng.mbrowser.event.BackEvent
+import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.widget.HomeView
 import com.liangfeng.mbrowser.widget.HomeView.HomeViewClick
 import org.greenrobot.eventbus.EventBus
@@ -27,8 +25,8 @@ class HomeFragment : BaseFragment(), HomeViewClick {
     var devidLine: LinearLayout? = null*/
     var ivSearchBar: ImageView? = null
 
-    var eventBack: EventBack? = EventBack()
-    var replaceFragment: EventReplaceFragment? = EventReplaceFragment()
+    var eventBack: BackEvent? = BackEvent()
+    var replaceFragment: ReplaceFragmentEvent? = ReplaceFragmentEvent()
 
 
 
@@ -55,7 +53,7 @@ class HomeFragment : BaseFragment(), HomeViewClick {
                     ?.translationY(50f)
                     ?.alpha(0f)
                     ?.setDuration(300)?.withEndAction {
-                replaceFragment?.type = EventReplaceFragment.SEARCH_FRAGMENT
+                replaceFragment?.type = ReplaceFragmentEvent.SEARCH_FRAGMENT
                 EventBus.getDefault().post(replaceFragment)
             }
         }

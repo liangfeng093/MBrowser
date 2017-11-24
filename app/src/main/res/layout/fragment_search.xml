@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/search_container"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
@@ -17,7 +17,6 @@
             android:id="@+id/devidLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_above="@+id/search_container"
             android:background="#EEEEEE"
             android:orientation="vertical" />
 
@@ -27,24 +26,27 @@
             android:orientation="horizontal">
 
             <EditText
-                android:textSize="@dimen/text_size14"
                 android:id="@+id/etSearchBar"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/seacrch_bar_marginTop"
                 android:background="#fff"
-                android:gravity="center_horizontal"
                 android:hint="@string/home_hint"
-                android:paddingBottom="20dp" />
+                android:textSize="@dimen/text_size14" />
 
             <TextView
-                android:textColor="#000"
-                android:textSize="@dimen/text_size14"
-                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:padding="5dp"
+                android:id="@+id/tvSearchCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/search_cancel" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/seacrch_bar_marginTop"
+                android:text="@string/search_cancel"
+                android:textColor="#000"
+                android:textSize="@dimen/text_size14" />
 
         </LinearLayout>
 
