@@ -10,9 +10,16 @@
         android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/devidLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/search_container"
+            android:background="#EEEEEE"
+            android:orientation="vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,9 +27,10 @@
             android:orientation="horizontal">
 
             <EditText
+                android:textSize="@dimen/text_size14"
                 android:id="@+id/etSearchBar"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:background="#fff"
@@ -30,24 +38,17 @@
                 android:hint="@string/home_hint"
                 android:paddingBottom="20dp" />
 
+            <TextView
+                android:textColor="#000"
+                android:textSize="@dimen/text_size14"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_cancel" />
+
         </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/devidLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/search_container"
-        android:background="#EEEEEE"
-        android:orientation="vertical" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/search_container"
-        android:background="#EEEEEE"
-        android:orientation="vertical" />
 
 
 </RelativeLayout>
