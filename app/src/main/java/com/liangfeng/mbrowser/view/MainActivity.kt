@@ -74,12 +74,16 @@ class MainActivity : BaseActivity() {
         when (replaceFragment.type) {
 
             EventReplaceFragment.HOME_FRAGMENT -> {
-                RxKeyboardTool.hideSoftInput(this, searchFragment?.etSearchBar)
-                supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.contains, homeFragment)
-                        .commit()
-                tools.visibility = View.VISIBLE
+                homeFragment?.ivSearchBar?.animate()
+                        ?.translationY(50f)
+                        ?.alpha(0f)
+                        ?.setDuration(300)?.withEndAction {
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.contains, homeFragment)
+                            .commit()
+                    tools.visibility = View.VISIBLE
+                }
             }
 
             EventReplaceFragment.SEARCH_FRAGMENT -> {

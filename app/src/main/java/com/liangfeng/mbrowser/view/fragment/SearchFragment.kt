@@ -41,6 +41,7 @@ class SearchFragment : BaseFragment() {
         RxKeyboardTool.showSoftInput(activity, etSearchBar)//确保view绘制完毕
 
     }
+
     override fun onPause() {
         super.onPause()
         RxKeyboardTool.hideSoftInput(activity, etSearchBar)
@@ -58,8 +59,10 @@ class SearchFragment : BaseFragment() {
     override fun setListener() {
         contains?.setOnClickListener {
             RxKeyboardTool.hideSoftInput(activity, etSearchBar)
-            replaceFragment?.type = EventReplaceFragment.HOME_FRAGMENT
-            EventBus.getDefault().post(replaceFragment)
+            etSearchBar?.postDelayed(Runnable {
+                replaceFragment?.type = EventReplaceFragment.HOME_FRAGMENT
+                EventBus.getDefault().post(replaceFragment)
+            }, 200)
         }
     }
 
