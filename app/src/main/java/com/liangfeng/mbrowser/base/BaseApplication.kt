@@ -1,7 +1,10 @@
 package com.liangfeng.mbrowser.base
 
 import android.content.Context
+import android.net.http.HttpResponseCache.install
 import com.vondear.rxtools.RxTool
+import me.yokeyword.fragmentation.BuildConfig
+import me.yokeyword.fragmentation.Fragmentation
 import org.litepal.LitePalApplication
 
 /**
@@ -11,9 +14,11 @@ import org.litepal.LitePalApplication
 
 class BaseApplication : LitePalApplication() {
 
-    companion object{//相当于静态变量
-        var contect : Context? = null
+    companion object {
+        //相当于静态变量
+        var contect: Context? = null
     }
+
     override fun onCreate() {
         super.onCreate()
         contect = getContext()

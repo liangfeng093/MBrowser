@@ -26,6 +26,7 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.rootView = inflater?.inflate(setLayout(), container, false)
+        Log.e(TAG,"onCreateView")
         initView()
         setListener()
         return rootView

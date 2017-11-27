@@ -14,6 +14,7 @@ import com.liangfeng.mbrowser.event.BackEvent
 import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.event.WebEvent
 import com.liangfeng.mbrowser.network.Url
+import com.liangfeng.mbrowser.view.MainActivity
 import com.vondear.rxtools.RxKeyboardTool
 import org.greenrobot.eventbus.EventBus
 
@@ -22,6 +23,14 @@ import org.greenrobot.eventbus.EventBus
  * Email:liangfeng093@gmail.com
  */
 class SearchFragment : BaseFragment(), TextWatcher {
+
+    companion object {
+
+        fun newInstance(): SearchFragment {
+            return SearchFragment()
+        }
+
+    }
 
 
     /************** view *****************/
@@ -41,6 +50,7 @@ class SearchFragment : BaseFragment(), TextWatcher {
 
 
     var keyWords: String = ""
+
 
     override fun setPresenter() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -70,7 +80,6 @@ class SearchFragment : BaseFragment(), TextWatcher {
         search_container = rootView?.findViewById<LinearLayout>(R.id.search_container)
         tvSearchCancel = rootView?.findViewById<TextView>(R.id.tvSearchCancel)
 
-
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -85,6 +94,7 @@ class SearchFragment : BaseFragment(), TextWatcher {
             } else {
                 replaceFragment?.keyWords = etSearchBar?.text.toString()
                 jumpTo(ReplaceFragmentEvent.WEB_FRAGMENT)
+//                (activity as MainActivity).mpb
             }
         }
 

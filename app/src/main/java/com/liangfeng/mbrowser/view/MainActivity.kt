@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.View
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.BackEvent
 import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
@@ -20,7 +21,11 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseActivity() {
+
+    var progress: RoundCornerProgressBar? = null
+
     override fun initView() {
+        this.progress = mProgress
     }
 
     override fun setListener() {
@@ -53,9 +58,6 @@ class MainActivity : BaseActivity() {
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 
     val MYTAG = "MainActivity"
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -93,7 +95,7 @@ class MainActivity : BaseActivity() {
 
             ReplaceFragmentEvent.WEB_FRAGMENT -> {
                 tools.visibility = View.VISIBLE
-                var url = Url.BAI_DU + "wd="+replaceFragment.keyWords//拼接关键字
+                var url = Url.BAI_DU + "wd=" + replaceFragment.keyWords//拼接关键字
                 webFragment = WebFragment(url)
                 supportFragmentManager
                         .beginTransaction()

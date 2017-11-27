@@ -50,4 +50,6 @@ dependencies {
     implementation 'me.yokeyword:fragmentation:1.1.8'
     //
     implementation 'com.github.vondear:RxTools:v1.7.6.4'
+    //进度条
+    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
 }
