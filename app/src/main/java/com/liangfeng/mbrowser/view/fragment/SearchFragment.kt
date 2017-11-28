@@ -2,6 +2,8 @@ package com.liangfeng.mbrowser.view.fragment
 
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -9,13 +11,20 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.google.gson.Gson
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.BackEvent
 import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.event.WebEvent
-import com.liangfeng.mbrowser.network.Url
-import com.liangfeng.mbrowser.view.MainActivity
+import com.liangfeng.mbrowser.module.PromptKeywordBean
+import com.liangfeng.mbrowser.network.RetrofitManager
+import com.liangfeng.mbrowser.network.RetrofitManager.Companion.promptKeyWords
+import com.liangfeng.mbrowser.network.observer.NetworkObserver
+import com.liangfeng.mbrowser.view.adapter.SearchAdapter
 import com.vondear.rxtools.RxKeyboardTool
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -39,6 +48,7 @@ class SearchFragment : BaseFragment(), TextWatcher {
     var devidLine: LinearLayout? = null
     var search_container: LinearLayout? = null
     var tvSearchCancel: TextView? = null
+    var rvSearch: RecyclerView? = null
 
     /************** Event *****************/
     var eventBack: BackEvent? = BackEvent()
@@ -48,8 +58,8 @@ class SearchFragment : BaseFragment(), TextWatcher {
     /************** flag *****************/
     var isCancel: Boolean = false
 
-
-    var keyWords: String = ""
+    var mAdapter: SearchAdapter? = null
+    var keyWords: MutableList<String>? = null
 
 
     override fun setPresenter() {
@@ -79,6 +89,12 @@ class SearchFragment : BaseFragment(), TextWatcher {
         devidLine = rootView?.findViewById<LinearLayout>(R.id.devidLine)
         search_container = rootView?.findViewById<LinearLayout>(R.id.search_container)
         tvSearchCancel = rootView?.findViewById<TextView>(R.id.tvSearchCancel)
+        rvSearch = rootView?.findViewById<RecyclerView>(R.id.rvSearch)
+
+        var layoutManager = LinearLayoutManager(activity)
+        rvSearch?.layoutManager = layoutManager
+        keyWords = mutableListOf<String>()
+
 
     }
 
@@ -94,7 +110,6 @@ class SearchFragment : BaseFragment(), TextWatcher {
             } else {
                 replaceFragment?.keyWords = etSearchBar?.text.toString()
                 jumpTo(ReplaceFragmentEvent.WEB_FRAGMENT)
-//                (activity as MainActivity).mpb
             }
         }
 
@@ -128,10 +143,26 @@ class SearchFragment : BaseFragment(), TextWatcher {
             Log.e(TAG, "取消")
             isCancel = true
             tvSearchCancel?.text = resources.getString(R.string.search_cancel)
+            mAdapter?.notifyDataSetChanged()
         } else {
             Log.e(TAG, "搜索")
             isCancel = false
             tvSearchCancel?.text = resources.getString(R.string.search_)
+            promptKeyWords(p0.toString(), object : NetworkObserver() {
+                override fun onNext(t: ResponseBody) {
+                    var string = t.string()
+                    string = string.subSequence(17, string.length - 2) as String?
+                    val gosn = Gson()
+                    var bean = gosn.fromJson(string, PromptKeywordBean::class.java)
+//                        Log.e(TAG, "bean:" + bean.toString())
+                    keyWords = bean.s?.toMutableList()
+                    Log.e(TAG, "keyWords:" + keyWords)
+                    Log.e(TAG, "size:" + keyWords?.size)
+                    mAdapter = SearchAdapter(R.layout.item_keyword, keyWords)
+                    rvSearch?.adapter = mAdapter
+                    keyWords?.size?.minus(1)?.let { rvSearch?.scrollToPosition(it) }
+                }
+            })
         }
     }
 }

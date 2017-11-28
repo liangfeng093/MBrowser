@@ -2,6 +2,7 @@ package com.liangfeng.mbrowser.base
 
 import android.content.Context
 import android.net.http.HttpResponseCache.install
+import com.liangfeng.mbrowser.network.RetrofitManager
 import com.vondear.rxtools.RxTool
 import me.yokeyword.fragmentation.BuildConfig
 import me.yokeyword.fragmentation.Fragmentation
@@ -23,5 +24,6 @@ class BaseApplication : LitePalApplication() {
         super.onCreate()
         contect = getContext()
 //        RxTool.init(this)
+        RetrofitManager.getInstance()
     }
 }

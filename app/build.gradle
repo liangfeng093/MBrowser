@@ -52,4 +52,7 @@ dependencies {
     implementation 'com.github.vondear:RxTools:v1.7.6.4'
     //进度条
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    //Recycler适配器
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    compile 'com.android.support:recyclerview-v7:23.1.1' //RecyclerView
 }

@@ -3,7 +3,6 @@ package com.liangfeng.mbrowser.view.fragment
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
@@ -11,10 +10,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.R.id.webView
 import com.liangfeng.mbrowser.event.WebEvent
 import com.liangfeng.mbrowser.view.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
 @SuppressLint("ValidFragment")
@@ -83,10 +80,6 @@ class WebFragment : BaseFragment {
                 Log.e(TAG, "newProgress:" + newProgress)
                 (activity as MainActivity).progress?.progress = newProgress.toFloat()-2
                 (activity as MainActivity).progress?.secondaryProgress = newProgress.toFloat()
-//                (activity as MainActivity).progress?.max = newProgress.toFloat()
-//                Log.e(TAG, "progress:" + (activity as MainActivity).progress)
-//                Log.e(TAG, "progress:" + (activity as MainActivity).mProgress?.progress)
-//                (activity as MainActivity).mProgress?.progress = newProgress.toFloat()
             }
         }
     }
