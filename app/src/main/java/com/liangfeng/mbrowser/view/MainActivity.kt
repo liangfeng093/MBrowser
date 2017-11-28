@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.BackEvent
@@ -104,6 +105,18 @@ class MainActivity : BaseActivity() {
             }
         }
 
+    }
+
+    var secondTime = 0L
+    var firstTime = 0L
+    override fun onBackPressed() {
+        secondTime = System.currentTimeMillis()
+        if (secondTime - firstTime > 2000) {
+            Toast.makeText(MainActivity@ this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            firstTime = secondTime;
+        } else {
+            System.exit(0);
+        }
     }
 
 

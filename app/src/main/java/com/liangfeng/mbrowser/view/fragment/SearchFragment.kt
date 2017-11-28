@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -24,6 +25,7 @@ import com.liangfeng.mbrowser.view.adapter.SearchAdapter
 import com.vondear.rxtools.RxKeyboardTool
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.fragment_search.*
 import okhttp3.ResponseBody
 import org.greenrobot.eventbus.EventBus
 
@@ -33,7 +35,9 @@ import org.greenrobot.eventbus.EventBus
  */
 class SearchFragment : BaseFragment(), TextWatcher {
 
+
     companion object {
+//        var fragment: SearchFragment? = null
 
         fun newInstance(): SearchFragment {
             return SearchFragment()
@@ -114,10 +118,11 @@ class SearchFragment : BaseFragment(), TextWatcher {
         }
 
         etSearchBar?.addTextChangedListener(this)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    private fun jumpTo(tag: Int) {
+    fun jumpTo(tag: Int) {
         RxKeyboardTool.hideSoftInput(activity, etSearchBar)
         replaceFragment?.type = tag
         search_container?.animate()
@@ -141,11 +146,14 @@ class SearchFragment : BaseFragment(), TextWatcher {
 
         if (p0?.isEmpty()!!) {
             Log.e(TAG, "取消")
+            rvSearch?.visibility = View.GONE
             isCancel = true
             tvSearchCancel?.text = resources.getString(R.string.search_cancel)
+            keyWords?.clear()
             mAdapter?.notifyDataSetChanged()
         } else {
             Log.e(TAG, "搜索")
+            rvSearch?.visibility = View.VISIBLE
             isCancel = false
             tvSearchCancel?.text = resources.getString(R.string.search_)
             promptKeyWords(p0.toString(), object : NetworkObserver() {
@@ -154,13 +162,13 @@ class SearchFragment : BaseFragment(), TextWatcher {
                     string = string.subSequence(17, string.length - 2) as String?
                     val gosn = Gson()
                     var bean = gosn.fromJson(string, PromptKeywordBean::class.java)
-//                        Log.e(TAG, "bean:" + bean.toString())
                     keyWords = bean.s?.toMutableList()
                     Log.e(TAG, "keyWords:" + keyWords)
                     Log.e(TAG, "size:" + keyWords?.size)
-                    mAdapter = SearchAdapter(R.layout.item_keyword, keyWords)
+                    mAdapter = SearchAdapter(this@SearchFragment, R.layout.item_keyword, keyWords)
                     rvSearch?.adapter = mAdapter
                     keyWords?.size?.minus(1)?.let { rvSearch?.scrollToPosition(it) }
+//                    mAdapter?.setOnItemClickListener()
                 }
             })
         }
