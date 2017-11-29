@@ -8,6 +8,6 @@
     <!-- 线的宽度，颜色灰色 -->
     <stroke android:color="#808080" android:width="1dp"></stroke>
     <!-- 矩形的圆角半径 -->
-    <corners android:radius="37dp"></corners>
+    <corners android:radius="17dp"></corners>
 
 </shape>

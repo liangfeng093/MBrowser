@@ -5,11 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.util.Log
 import android.view.*
-import android.widget.BaseAdapter
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.liangfeng.mbrowser.R
 import com.vondear.rxtools.RxImageTool
 
@@ -20,6 +18,7 @@ import com.vondear.rxtools.RxImageTool
  */
 class MenuDialogFragment : DialogFragment {
     var context1: Context? = null
+    val TAG = "MenuDialogFragment"
 
     @SuppressLint("ValidFragment")
     constructor(context1: Context?) : super() {
@@ -35,7 +34,32 @@ class MenuDialogFragment : DialogFragment {
 
         var gridView = dialog?.findViewById<GridView>(R.id.gvMenu)
         gridView?.adapter = context1?.let { ItemAdapter(it) }
+        gridView?.setOnItemClickListener { adapterView, view, i, l ->
+            Log.e(TAG, "POSITION:" + i)
+            when (i) {
+                0 -> {//书签历史
 
+                }
+                1 -> {
+                }
+                2 -> {
+                }
+                3 -> {
+                }
+                4 -> {
+                }
+                5 -> {
+                }
+                6 -> {
+                }
+                7 -> {
+                }
+                8 -> {
+                }
+                9 -> {
+                }
+            }
+        }
         // 设置宽度为屏宽, 靠近屏幕底部。
         var attr = dialog.window.attributes
         attr.gravity = Gravity.BOTTOM
@@ -79,7 +103,7 @@ class MenuDialogFragment : DialogFragment {
         }
 
         override fun getItemId(p0: Int): Long {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            return p0.toLong()
         }
 
         override fun getCount(): Int {
