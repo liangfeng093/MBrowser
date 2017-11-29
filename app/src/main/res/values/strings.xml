@@ -16,4 +16,8 @@
     <string name="menu_dark_mode">夜间模式</string>
     <string name="menu_2">2</string>
 
+    <!--书签页-->
+    <string name="bookmark">书签</string>
+    <string name="history">历史</string>
+
 </resources>

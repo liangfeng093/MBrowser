@@ -3,12 +3,14 @@ package com.liangfeng.mbrowser.widget
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.view.*
 import android.widget.*
 import com.liangfeng.mbrowser.R
+import com.liangfeng.mbrowser.view.activity.HistoryActivity
 import com.vondear.rxtools.RxImageTool
 
 @SuppressLint("ValidFragment")
@@ -36,9 +38,11 @@ class MenuDialogFragment : DialogFragment {
         gridView?.adapter = context1?.let { ItemAdapter(it) }
         gridView?.setOnItemClickListener { adapterView, view, i, l ->
             Log.e(TAG, "POSITION:" + i)
+            var intent: Intent
             when (i) {
                 0 -> {//书签历史
-
+                    intent = Intent(activity, HistoryActivity::class.java)
+                    startActivity(intent)
                 }
                 1 -> {
                 }

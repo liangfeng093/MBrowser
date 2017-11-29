@@ -54,7 +54,9 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     //Recycler适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
-    compile 'com.android.support:recyclerview-v7:23.1.1' //RecyclerView
+//    compile 'com.android.support:recyclerview-v7:23.1.1' //RecyclerView
     //
     compile 'com.github.vondear:RxTools:v1.7.6.4'//请替换成上方 JitPack 最新的版本号
+    //材料设计
+    compile 'com.android.support:design:25.0.0'
 }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--注释最小字体:-->
     <dimen name="text_size12">12sp</dimen>
+    <!--文本字体:-->
     <dimen name="text_size14">14sp</dimen>
+    <!--文章标题或图标名称:-->
     <dimen name="text_size16">16sp</dimen>
+    <!--导航标题:-->
     <dimen name="text_size18">18sp</dimen>
 
     <dimen name="seacrch_bar_marginTop">8dp</dimen>
