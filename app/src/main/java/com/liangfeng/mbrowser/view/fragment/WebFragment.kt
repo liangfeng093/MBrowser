@@ -11,8 +11,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.WebEvent
+import com.liangfeng.mbrowser.module.BrowsingHistoryBean
 import com.liangfeng.mbrowser.view.MainActivity
+import com.vondear.rxtools.RxImageTool
 import org.greenrobot.eventbus.Subscribe
+import java.io.File
 
 @SuppressLint("ValidFragment")
 /**
@@ -53,14 +56,16 @@ class WebFragment : BaseFragment {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                Log.e(TAG, "onPageStarted")
+                Log.e(mTAG, "onPageStarted")
                 (activity as MainActivity).progress?.setBackgroundColor(Color.WHITE)
                 (activity as MainActivity).progress?.visibility = View.VISIBLE
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                Log.e(TAG, "onPageFinished")
+                Log.e(mTAG, "onPageFinished")
+                //保存URL到数据库，作为浏览记录
+
                 (activity as MainActivity).progress?.visibility = View.INVISIBLE
             }
 
@@ -69,16 +74,36 @@ class WebFragment : BaseFragment {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.e(TAG, "shouldOverrideUrlLoading")
+                Log.e(mTAG, "shouldOverrideUrlLoading")
                 view?.loadUrl(url)
                 return true//不打开系统浏览器
             }
         }
         webView?.webChromeClient = object : WebChromeClient() {
+
+            override fun onReceivedTitle(view: WebView?, title: String?) {
+                super.onReceivedTitle(view, title)
+                Log.e(mTAG, "onReceivedTitle")
+                var bean = BrowsingHistoryBean()
+                bean?.title = title.toString()
+                bean?.url = view?.url
+                var isSave = bean?.save()
+                Log.e(mTAG, "bean:" + bean.toString())
+                Log.e(mTAG, "保存成功:" + isSave)
+
+            }
+
+            override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
+                super.onReceivedIcon(view, icon)
+                var filePath = activity.filesDir
+                var file = File(filePath.toString())
+                Log.e(mTAG, "filePath:" + filePath.toString())
+//                RxImageTool.save(icon,)
+            }
+
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                Log.e(TAG, "newProgress:" + newProgress)
-                (activity as MainActivity).progress?.progress = newProgress.toFloat()-2
+                (activity as MainActivity).progress?.progress = newProgress.toFloat() - 2
                 (activity as MainActivity).progress?.secondaryProgress = newProgress.toFloat()
             }
         }

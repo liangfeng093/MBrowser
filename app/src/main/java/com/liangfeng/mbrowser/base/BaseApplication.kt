@@ -1,12 +1,11 @@
 package com.liangfeng.mbrowser.base
 
 import android.content.Context
-import android.net.http.HttpResponseCache.install
 import com.liangfeng.mbrowser.network.RetrofitManager
 import com.vondear.rxtools.RxTool
-import me.yokeyword.fragmentation.BuildConfig
-import me.yokeyword.fragmentation.Fragmentation
+import org.litepal.LitePal
 import org.litepal.LitePalApplication
+import org.litepal.util.Const
 
 /**
  * Created by mzf on 2017/11/22.
@@ -17,13 +16,14 @@ class BaseApplication : LitePalApplication() {
 
     companion object {
         //相当于静态变量
-        var contect: Context? = null
+        var context: Context? = null
     }
 
     override fun onCreate() {
         super.onCreate()
-        contect = getContext()
+        context = getContext()
         RxTool.init(this)
+        LitePal.initialize(context)
         RetrofitManager.getInstance()
     }
 }

@@ -46,7 +46,7 @@ dependencies {
     //65535
 //    implementation 'com.android.support:multidex:1.0.0'
     //数据库
-    implementation 'org.litepal.android:core:1.3.0'
+    implementation 'org.litepal.android:core:1.4.1'
     implementation 'me.yokeyword:fragmentation:1.1.8'
     //
     implementation 'com.github.vondear:RxTools:v1.7.6.4'
