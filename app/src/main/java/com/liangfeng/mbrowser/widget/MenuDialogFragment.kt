@@ -26,17 +26,8 @@ class MenuDialogFragment : DialogFragment {
         this.context1 = context1
     }
 
-
-    /* override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)//去掉对话框标题
-         var view = inflater?.inflate(R.layout.dialog_menu, container)
-         var gridView = view?.findViewById<GridView>(R.id.gvMenu)
-         gridView?.adapter = context1?.let { ItemAdapter(it) }
-         return view
-     }*/
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        //// 使用不带Theme的构造器, 获得的dialog边框距离屏幕仍有几毫米的缝隙。
+        // 使用不带Theme的构造器, 获得的dialog边框距离屏幕仍有几毫米的缝隙。
         var dialog = Dialog(context1, R.style.BottomDialog)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // 设置Content前设定
         dialog.setContentView(R.layout.dialog_menu)
@@ -49,7 +40,7 @@ class MenuDialogFragment : DialogFragment {
         var attr = dialog.window.attributes
         attr.gravity = Gravity.BOTTOM
         attr.width = WindowManager.LayoutParams.WRAP_CONTENT
-        attr.verticalMargin = RxImageTool.px2dp(1f).toFloat()
+        attr.windowAnimations = R.style.dialogAnim
         dialog.window.attributes = attr
 
         return dialog

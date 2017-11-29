@@ -11,9 +11,20 @@
     <style name="BottomDialog" parent="@style/AppTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:windowFrame">@null</item> <!--Dialog的windowFrame框为无 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 是否半透明 -->
+        <item name="android:windowNoTitle">true</item><!-- dim:模糊的 阴影效果 -->
+        <!-- 是否漂现在activity上-->
         <item name="android:windowIsFloating">true</item>
+        <!-- dim:模糊的 阴影效果 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!--设置背景透明，防止出现尖角-->
+        <!-- 背景图片的大小也影响窗口的大小 -->
         <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <style name="dialogAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@animator/menu_dialog_push_in</item>
+        <item name="android:windowExitAnimation">@animator/menu_dialog_push_out</item>
     </style>
 </resources>
