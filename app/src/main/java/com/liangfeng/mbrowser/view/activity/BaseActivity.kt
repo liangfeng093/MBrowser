@@ -20,6 +20,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         super.onCreate(savedInstanceState)
         setContentView(setLayout())
         initView()
+        setListener()
         //注册eventbus
     }
 

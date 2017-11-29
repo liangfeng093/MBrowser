@@ -23,7 +23,7 @@ class BaseApplication : LitePalApplication() {
     override fun onCreate() {
         super.onCreate()
         contect = getContext()
-//        RxTool.init(this)
+        RxTool.init(this)
         RetrofitManager.getInstance()
     }
 }

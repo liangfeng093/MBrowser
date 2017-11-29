@@ -4,4 +4,16 @@
     <string name="home_hint">请输入搜索内容</string>
     <string name="search_cancel">取消</string>
     <string name="search_">搜索</string>
+
+    <!--menu-->
+    <string name="menu_bookmark">书签历史</string>
+    <string name="menu_download">下载</string>
+    <string name="setting">设置</string>
+    <string name="menu_add_bookmark">添加书签</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_1">1</string>
+    <string name="menu_no_trace">无痕</string>
+    <string name="menu_dark_mode">夜间模式</string>
+    <string name="menu_2">2</string>
+
 </resources>

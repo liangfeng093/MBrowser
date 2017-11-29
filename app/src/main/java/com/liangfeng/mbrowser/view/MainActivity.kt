@@ -16,6 +16,7 @@ import com.liangfeng.mbrowser.view.activity.BaseActivity
 import com.liangfeng.mbrowser.view.fragment.HomeFragment
 import com.liangfeng.mbrowser.view.fragment.SearchFragment
 import com.liangfeng.mbrowser.view.fragment.WebFragment
+import com.liangfeng.mbrowser.widget.MenuDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -24,12 +25,41 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : BaseActivity() {
 
     var progress: RoundCornerProgressBar? = null
-
+    var replaceFragment: ReplaceFragmentEvent? = ReplaceFragmentEvent()
     override fun initView() {
         this.progress = mProgress
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun setListener() {
+
+        /*ivSearchBar?.setOnClickListener {
+
+            ivSearchBar?.animate()
+                    ?.translationY(50f)
+                    ?.alpha(0f)
+                    ?.setDuration(300)?.withEndAction {
+
+                replaceFragment?.type = ReplaceFragmentEvent.SEARCH_FRAGMENT
+                EventBus.getDefault().post(replaceFragment)
+            }
+        }*/
+        windows.setOnClickListener {
+
+            Log.e(mTAG, "windows")
+        }
+
+        up.setOnClickListener {
+            Log.e(mTAG, "up")
+
+        }
+
+        menu.setOnClickListener {
+            Log.e(mTAG, "弹出menu")
+
+            var dialogMenu = MenuDialogFragment(MainActivity@ this)
+            dialogMenu.show(supportFragmentManager, "MenuDialogFragment")
+        }
     }
 
     override fun setLayout(): Int {
@@ -51,10 +81,10 @@ class MainActivity : BaseActivity() {
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
 
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.contains, homeFragment)
-                .commit()
+         supportFragmentManager
+                 .beginTransaction()
+                 .replace(R.id.contains, homeFragment)
+                 .commit()
 
 
     }

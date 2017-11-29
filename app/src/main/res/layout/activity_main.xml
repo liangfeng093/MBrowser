@@ -7,10 +7,6 @@
     android:background="#ffffff"
     tools:context="com.liangfeng.mbrowser.view.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/contains"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/tools"
@@ -20,53 +16,81 @@
         android:background="#fff"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ivWindows"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+        <RelativeLayout
             android:clickable="true"
-            android:contextClickable="true"
-            android:src="@mipmap/windows" />
+            android:id="@+id/windows"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:src="@mipmap/tool_arrow" />
+            <ImageView
+                android:id="@+id/ivWindows"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/windows" />
+        </RelativeLayout>
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+
+        <RelativeLayout
             android:clickable="true"
-            android:src="@mipmap/tool_menu" />
+            android:id="@+id/up"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/tool_arrow" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:clickable="true"
+            android:id="@+id/menu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/tool_menu" />
+        </RelativeLayout>
 
 
     </LinearLayout>
 
     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
         android:id="@+id/mProgress"
-        android:layout_above="@+id/tools"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:rcProgress="0.0"
-        app:rcSecondaryProgress="0.0"
-        app:rcMax="100.0"
-        app:rcRadius="5dp"
+        android:layout_above="@+id/tools"
+        app:rcBackgroundColor="#FFF"
         app:rcBackgroundPadding="0dp"
-        app:rcReverse="false"
+        app:rcMax="100.0"
+        app:rcProgress="0.0"
         app:rcProgressColor="#80D8FF"
-        app:rcSecondaryProgressColor="#40C4FF"
-        app:rcBackgroundColor="#FFF" />
+        app:rcRadius="5dp"
+        app:rcReverse="false"
+        app:rcSecondaryProgress="0.0"
+        app:rcSecondaryProgressColor="#40C4FF" />
+
     <FrameLayout
+        android:id="@+id/contains"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tools" />
+        android:layout_above="@id/mProgress" />
+
+   <!-- <ImageView
+        android:id="@+id/ivSearchBar"
+        android:src="@drawable/search_bar"
+        android:layout_centerInParent="true"
+        android:layout_width="300dp"
+        android:layout_height="50dp" />-->
 
 </RelativeLayout>
