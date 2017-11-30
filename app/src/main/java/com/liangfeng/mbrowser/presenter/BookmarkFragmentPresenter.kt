@@ -25,7 +25,6 @@ class BookmarkFragmentPresenter : BrowsingHistoryContract.Presenter {
     }
 
     override fun getData() {
-        Logger.e("getData")
         module?.getBrowsingHistory(object : BaseModule.GetLocalCallback<MutableList<BrowsingHistoryBean>> {
             override fun onSuccess(t: MutableList<BrowsingHistoryBean>) {
                 var event = BookmarkEvent(true, t)

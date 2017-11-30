@@ -14,6 +14,7 @@ class ReplaceFragmentEvent {
 
     var type: Int = 0
     var keyWords: String = ""
+    var url: String = ""
 
     constructor()
 }

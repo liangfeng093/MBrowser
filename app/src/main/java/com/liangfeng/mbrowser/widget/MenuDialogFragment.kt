@@ -38,11 +38,10 @@ class MenuDialogFragment : DialogFragment {
         gridView?.adapter = context1?.let { ItemAdapter(it) }
         gridView?.setOnItemClickListener { adapterView, view, i, l ->
             Log.e(TAG, "POSITION:" + i)
-            var intent: Intent
+            var intent: Intent? = null
             when (i) {
                 0 -> {//书签历史
                     intent = Intent(activity, HistoryActivity::class.java)
-                    startActivity(intent)
                 }
                 1 -> {
                 }
@@ -63,6 +62,10 @@ class MenuDialogFragment : DialogFragment {
                 9 -> {
                 }
             }
+            if (intent !== null) {
+                startActivity(intent)
+            }
+            dismiss()
         }
         // 设置宽度为屏宽, 靠近屏幕底部。
         var attr = dialog.window.attributes

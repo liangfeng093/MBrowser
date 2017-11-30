@@ -6,10 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.liangfeng.mbrowser.base.BaseApplication
-import com.liangfeng.mbrowser.base.BaseView
 import com.liangfeng.mbrowser.event.BackEvent
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -20,13 +17,6 @@ abstract class BaseFragment : Fragment() {
 
     var rootView: View? = null
     val TAG = "BaseFragment"
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //注册eventbus
-//        EventBus.getDefault().register(activity)
-
-    }
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.rootView = inflater?.inflate(setLayout(), container, false)
@@ -50,11 +40,5 @@ abstract class BaseFragment : Fragment() {
     @Subscribe
     fun base(event: BackEvent) {
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        //注销eventbus
-//        EventBus.getDefault().unregister(activity)
     }
 }

@@ -1,6 +1,8 @@
 package com.liangfeng.mbrowser.view.activity
 
 import android.content.res.Resources
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -25,8 +27,8 @@ class HistoryActivity : BaseActivity() {
         return R.layout.activity_history
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
-        Logger.e("initView")
         var fragments = listOf<Fragment>(BookmarkFragment(), BookmarkFragment())
         vpHistory.adapter = BookmarkPagerAdapter(supportFragmentManager, fragments)
 
@@ -43,10 +45,13 @@ class HistoryActivity : BaseActivity() {
         tabLayout.getTabAt(0)?.setText(resources.getString(R.string.bookmark))
         tabLayout.getTabAt(1)?.setText(resources.getString(R.string.history))
 
+        setSupportActionBar(titleBar)
     }
 
     override fun setListener() {
-
+        titleBar?.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     fun setIndicator(tabs: TabLayout, leftDip: Int, rightDip: Int) {

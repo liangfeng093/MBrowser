@@ -67,7 +67,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
     var homeFragment: HomeFragment? = null
     var searchFragment: SearchFragment? = null
     var webFragment: WebFragment? = null
@@ -80,10 +79,10 @@ class MainActivity : BaseActivity() {
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
 
-         supportFragmentManager
-                 .beginTransaction()
-                 .replace(R.id.contains, homeFragment)
-                 .commit()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.contains, homeFragment)
+                .commit()
 
 
     }
@@ -102,9 +101,9 @@ class MainActivity : BaseActivity() {
     val mTAG: String = "MainActivity"
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onHitToolBar1(replaceFragment: ReplaceFragmentEvent) {
-        Log.e(mTAG, "type:" + replaceFragment.type)
-        when (replaceFragment.type) {
+    fun onHitToolBar1(event: ReplaceFragmentEvent) {
+        Log.e(mTAG, "type:" + event.type)
+        when (event.type) {
 
             ReplaceFragmentEvent.HOME_FRAGMENT -> {
                 supportFragmentManager
@@ -125,15 +124,21 @@ class MainActivity : BaseActivity() {
 
             ReplaceFragmentEvent.WEB_FRAGMENT -> {
                 tools.visibility = View.VISIBLE
-                var url = Url.BAI_DU + "wd=" + replaceFragment.keyWords//拼接关键字
+                var url: String = ""
+                if (event.url.isEmpty()) {
+                    url = Url.BAI_DU + "wd=" + event.keyWords//拼接关键字
+
+                } else {
+                    url = event.url
+                }
                 webFragment = WebFragment(url)
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.contains, webFragment)
-                        .commit()
+                        .commitAllowingStateLoss()//允许状态值丢失
+//                        .commit()
             }
         }
-
     }
 
     var secondTime = 0L
