@@ -7,27 +7,11 @@ import android.app.Activity
  * Email:liangfeng093@gmail.com
  */
 
-interface BaseView {
+interface BaseView<T> {
     /**
+     * 规定View必须要实现setPresenter方法，则View中保持对Presenter的引用
      * 关联presenter
      */
-    fun setPresenter()
+    fun setPresenter(presenter: T)
 
-    /**
-     * 设置布局
-     */
-    fun setLayout(): Int
-
-    /**
-     * 初始化控件
-     */
-    fun initView()
-    /**
-     * 设置监听
-     */
-    fun setListener()
-    /**
-     * 设置父activity
-     */
-//    fun setActivity():Activity
 }

@@ -8,8 +8,8 @@ import android.util.TypedValue
 import android.widget.LinearLayout
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
-import com.liangfeng.mbrowser.view.fragment.BookMarkFragment
-import com.liangfeng.mbrowser.view.fragment.HomeFragment
+import com.liangfeng.mbrowser.view.fragment.BookmarkFragment
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_history.*
 import java.lang.reflect.Field
 
@@ -18,9 +18,6 @@ import java.lang.reflect.Field
  * Email:liangfeng093@gmail.com
  */
 class HistoryActivity : BaseActivity() {
-    override fun setPresenter() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     val mTAG = "HistoryActivity"
 
@@ -29,8 +26,8 @@ class HistoryActivity : BaseActivity() {
     }
 
     override fun initView() {
-
-        var fragments = listOf<Fragment>(BookMarkFragment(), BookMarkFragment())
+        Logger.e("initView")
+        var fragments = listOf<Fragment>(BookmarkFragment(), BookmarkFragment())
         vpHistory.adapter = BookmarkPagerAdapter(supportFragmentManager, fragments)
 
         tabLayout.post {

@@ -3,7 +3,7 @@ package com.liangfeng.mbrowser.view.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.module.BrowsingHistoryBean
+import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 
 /**
  * Created by mzf on 2017/11/30.

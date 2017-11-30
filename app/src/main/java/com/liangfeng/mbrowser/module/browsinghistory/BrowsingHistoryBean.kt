@@ -1,4 +1,4 @@
-package com.liangfeng.mbrowser.module
+package com.liangfeng.mbrowser.module.browsinghistory
 
 import org.litepal.crud.DataSupport
 

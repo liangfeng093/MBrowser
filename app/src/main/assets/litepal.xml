@@ -3,6 +3,6 @@
     <dbname value="history" ></dbname>
     <version value="1" ></version>
     <list>
-        <mapping class="com.liangfeng.mbrowser.module.BrowsingHistoryBean"></mapping>
+        <mapping class="com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean"></mapping>
     </list>
 </litepal>

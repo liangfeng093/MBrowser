@@ -11,9 +11,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.WebEvent
-import com.liangfeng.mbrowser.module.BrowsingHistoryBean
+import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.view.MainActivity
-import com.vondear.rxtools.RxImageTool
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
 
@@ -34,9 +33,6 @@ class WebFragment : BaseFragment {
         this.url = url
     }
 
-    override fun setPresenter() {
-
-    }
 
     override fun setLayout(): Int {
         return R.layout.fragment_web

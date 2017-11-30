@@ -66,8 +66,7 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    override fun setPresenter() {
-    }
+
 
     var homeFragment: HomeFragment? = null
     var searchFragment: SearchFragment? = null

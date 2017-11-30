@@ -61,9 +61,7 @@ class HomeFragment : BaseFragment(), HomeViewClick {
     val MYTAG = "HomeFragment"
 
 
-    override fun setPresenter() {
 
-    }
 
     override fun setLayout(): Int {
         return R.layout.fragment_home

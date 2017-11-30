@@ -2,6 +2,8 @@ package com.liangfeng.mbrowser.base
 
 import android.content.Context
 import com.liangfeng.mbrowser.network.RetrofitManager
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import com.vondear.rxtools.RxTool
 import org.litepal.LitePal
 import org.litepal.LitePalApplication
@@ -25,5 +27,6 @@ class BaseApplication : LitePalApplication() {
         RxTool.init(this)
         LitePal.initialize(context)
         RetrofitManager.getInstance()
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 }

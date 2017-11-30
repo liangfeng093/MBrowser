@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by mzf on 2017/11/21.
  * Email:liangfeng093@gmail.com
  */
-abstract class BaseActivity : AppCompatActivity(), BaseView {
+abstract class BaseActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +23,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         setListener()
         //注册eventbus
     }
+
+    abstract fun setLayout(): Int
+
+    abstract fun setListener()
+
+    abstract fun initView()
 
     override fun onStart() {
         super.onStart()

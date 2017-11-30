@@ -66,9 +66,7 @@ class SearchFragment : BaseFragment(), TextWatcher {
     var keyWords: MutableList<String>? = null
 
 
-    override fun setPresenter() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     override fun setLayout(): Int {
         return R.layout.fragment_search
