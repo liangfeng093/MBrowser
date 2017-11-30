@@ -13,6 +13,8 @@ import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.event.WebEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.view.MainActivity
+import com.vondear.rxtools.RxDataTool
+import com.vondear.rxtools.RxTimeTool
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
 
@@ -83,10 +85,17 @@ class WebFragment : BaseFragment {
                 var bean = BrowsingHistoryBean()
                 bean?.title = title.toString()
                 bean?.url = view?.url
+                var time = RxTimeTool.getCurTimeString().subSequence(0, 10)
+                var time1 = RxTimeTool.getCurTimeString().subSequence(11, 19)
+                var list = time.split("-")
+                var list1 = time1.split(":")
+                bean?.time = list[1] + "月" + list[2] + "日" + list1[1]
                 var isSave = bean?.save()
                 Log.e(mTAG, "bean:" + bean.toString())
                 Log.e(mTAG, "保存成功:" + isSave)
-
+                Log.e(mTAG, "time:" + list[0] + "年" + list[1] + "月" + list[2] + "日")
+                Log.e(mTAG, "time1:" + time1)
+                Log.e(mTAG, "time2:" + RxTimeTool.getCurTimeString())
             }
 
             override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {

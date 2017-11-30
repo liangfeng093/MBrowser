@@ -83,8 +83,6 @@ class MainActivity : BaseActivity() {
                 .beginTransaction()
                 .replace(R.id.contains, homeFragment)
                 .commit()
-
-
     }
 
 

@@ -9,6 +9,7 @@ import org.litepal.crud.DataSupport
 class BrowsingHistoryBean : DataSupport() {
     var url: String? = ""
     var title: String? = ""
+    var time: String? = ""
 
     override fun toString(): String {
         return "BrowsingHistoryBean(url=$url, title='$title')"
