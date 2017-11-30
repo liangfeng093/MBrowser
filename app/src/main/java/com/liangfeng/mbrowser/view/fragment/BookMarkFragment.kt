@@ -3,6 +3,10 @@ package com.liangfeng.mbrowser.view.fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.liangfeng.mbrowser.R
+import com.liangfeng.mbrowser.module.BrowsingHistoryBean
+import com.liangfeng.mbrowser.view.adapter.BookmarkAdapter
+import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
+import org.litepal.crud.DataSupport
 
 /**
  * Created by mzf on 2017/11/29.
@@ -10,7 +14,6 @@ import com.liangfeng.mbrowser.R
  */
 class BookMarkFragment : BaseFragment() {
     override fun setPresenter() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setLayout(): Int {
@@ -23,9 +26,12 @@ class BookMarkFragment : BaseFragment() {
         var layoutManager = LinearLayoutManager(activity)
         rvBookmark?.layoutManager = layoutManager
 
+        var historys: MutableList<BrowsingHistoryBean> = DataSupport.findAll(BrowsingHistoryBean::class.java)
+        rvBookmark?.adapter = BookmarkAdapter(R.layout.item_bookmark, historys)
+
     }
 
     override fun setListener() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

@@ -1,27 +1,24 @@
 package com.liangfeng.mbrowser.view.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
+import com.liangfeng.mbrowser.R
+import com.liangfeng.mbrowser.module.BrowsingHistoryBean
 
 /**
- * Created by mzf on 2017/11/29.
+ * Created by mzf on 2017/11/30.
  * Email:liangfeng093@gmail.com
  */
-public class BookmarkAdapter : FragmentPagerAdapter {
+class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder> {
 
-    constructor(fm: FragmentManager, list: List<Fragment>) : super(fm) {
-        this.list = list
+    var list: MutableList<BrowsingHistoryBean>? = null
+
+    constructor(layoutResId: Int, data: MutableList<BrowsingHistoryBean>?) : super(layoutResId, data) {
+        list = data
     }
 
-    var list: List<Fragment>? = null
-
-
-    override fun getItem(position: Int): android.support.v4.app.Fragment {
-        return list?.get(position)!!
+    override fun convert(helper: BaseViewHolder?, item: BrowsingHistoryBean?) {
+        helper?.setText(R.id.tvItemBookmark, item?.title)
     }
 
-    override fun getCount(): Int {
-       return list?.size!!
-    }
 }

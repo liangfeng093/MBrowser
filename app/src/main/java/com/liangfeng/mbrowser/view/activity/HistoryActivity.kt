@@ -7,7 +7,8 @@ import android.util.Log
 import android.util.TypedValue
 import android.widget.LinearLayout
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.view.adapter.BookmarkAdapter
+import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
+import com.liangfeng.mbrowser.view.fragment.BookMarkFragment
 import com.liangfeng.mbrowser.view.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_history.*
 import java.lang.reflect.Field
@@ -29,8 +30,8 @@ class HistoryActivity : BaseActivity() {
 
     override fun initView() {
 
-        var fragments = listOf<Fragment>(HomeFragment(), HomeFragment())
-        vpHistory.adapter = BookmarkAdapter(supportFragmentManager, fragments)
+        var fragments = listOf<Fragment>(BookMarkFragment(), BookMarkFragment())
+        vpHistory.adapter = BookmarkPagerAdapter(supportFragmentManager, fragments)
 
         tabLayout.post {
             setIndicator(tabLayout, 35, 35)
