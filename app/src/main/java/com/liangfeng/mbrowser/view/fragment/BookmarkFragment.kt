@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -18,10 +19,12 @@ import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.presenter.BookmarkFragmentPresenter
 import com.liangfeng.mbrowser.view.adapter.BookmarkAdapter
+import com.liangfeng.mbrowser.widget.SectionDecoration
 import com.orhanobut.logger.Logger
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.litepal.crud.DataSupport
 
 /**
  * Created by mzf on 2017/11/29.
@@ -70,7 +73,7 @@ class BookmarkFragment : BaseFragment(), BrowsingHistoryContract.View, BaseQuick
 
         BookmarkFragmentPresenter(this)
         rvBookmark = rootView?.findViewById<RecyclerView>(R.id.rvBookmark)
-        floatItem = rootView?.findViewById<TextView>(R.id.floatItem)
+//        floatItem = rootView?.findViewById<TextView>(R.id.floatItem)
         layoutManager = LinearLayoutManager(activity)
         rvBookmark?.layoutManager = layoutManager
 
@@ -80,53 +83,28 @@ class BookmarkFragment : BaseFragment(), BrowsingHistoryContract.View, BaseQuick
 
     @TargetApi(Build.VERSION_CODES.M)
     override fun setListener() {
-        rvBookmark?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                var position: Int? = layoutManager?.findFirstVisibleItemPosition()
-                var view = position?.let { layoutManager?.findViewByPosition(it) }
-                var status = view?.getTag()
-                var top = view?.top
-                var time = position?.let { list?.get(it)?.time }
-                var tempTime = time
-                if (position!! > 0) {
-                    tempTime = position?.minus(1)?.let { list?.get(it)?.time }.toString()
-                } else {
-                    tempTime = time.toString()
-                }
-
-//                var params = floatItem?.layoutParams
-                if (time.equals(tempTime)) {
-                    floatItem?.setText(time)
-                } else {
-                    floatItem?.setText(tempTime)
-                }
-                when (status) {
-                    BookmarkAdapter.NO_FLOAT -> {
-                        if (top?.toFloat()!! < 0) {
-                            floatItem?.translationY = top?.toFloat()!!
-                        } else {
-                            Logger.e("y=0f")
-                            floatItem?.translationY = 0f
-                        }
+        rvBookmark?.addItemDecoration(SectionDecoration(activity, object : SectionDecoration.GroupInfoCallback {
+            override fun getGroupInfo(position: Int): BrowsingHistoryBean {
+                //数据分组
+                var bean = list?.get(position)
+                if (position > 0) {
+                    var time = bean?.time
+                    var beforeBean = list?.get(position - 1)
+                    var beforeTime = beforeBean?.time
+                    var isSame = time?.equals(beforeTime)
+                    var count = DataSupport.where("time=?", bean?.time).count("BrowsingHistoryBean")
+                    bean?.groupSize = count
+                    if (isSame!!) {
+                        list?.get(position)?.groupId = list?.get(position)?.time.toString()
                     }
-                    BookmarkAdapter.NEED_FLOAT -> {
-                        floatItem?.translationY = 0f
-                    }
+                } else {
+                    list?.get(position)?.groupId = list?.get(position)?.time.toString()
                 }
-
-
+//                return list?.get(position)!!
+                return bean!!
             }
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-            }
-        })
-        /*override fun onScrollChange(p0: View?, p1: Int, p2: Int, p3: Int, p4: Int) {
-            var y = p4 - p3
-            Logger.e("y移动了:" + y)
-        }*/
+        }))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,6 +120,7 @@ class BookmarkFragment : BaseFragment(), BrowsingHistoryContract.View, BaseQuick
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun receive(event: BookmarkEvent) {
         list = event.list?.asReversed()
+//        list = event.list
         floatItem?.setText(list?.get(0)?.time)
         var adapter = BookmarkAdapter(this, R.layout.item_bookmark, list)
         rvBookmark?.adapter = adapter

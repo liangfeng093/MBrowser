@@ -1,6 +1,7 @@
 package com.liangfeng.mbrowser.base
 
 import android.content.Context
+import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.network.RetrofitManager
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger

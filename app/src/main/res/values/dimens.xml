@@ -11,6 +11,8 @@
     <dimen name="text_size18">18sp</dimen>
 
     <dimen name="seacrch_bar_marginTop">8dp</dimen>
+    <dimen name="header_height">20dp</dimen>
+    <dimen name="header_divider_height">1dp</dimen>
 
 
 </resources>

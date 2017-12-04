@@ -4,15 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/floatItem"
         android:layout_width="match_parent"
-        android:layout_height="-20dp"
-        android:background="#f00" />
+        android:layout_height="20dp"
+        android:background="#55ff0000" />-->
 
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/rvBookmark"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 </LinearLayout>
