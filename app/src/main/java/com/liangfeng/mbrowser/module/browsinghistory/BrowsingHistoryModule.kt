@@ -32,4 +32,8 @@ class BrowsingHistoryModule {
         }
     }
 
+    fun deleteItem(timeDetails:String){
+        DataSupport.deleteAll(BrowsingHistoryBean::class.java,"timeDetails=?",timeDetails)
+    }
+
 }

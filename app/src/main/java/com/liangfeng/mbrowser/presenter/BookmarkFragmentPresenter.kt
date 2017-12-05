@@ -2,11 +2,10 @@ package com.liangfeng.mbrowser.presenter
 
 import com.liangfeng.mbrowser.base.BaseModule
 import com.liangfeng.mbrowser.contract.BrowsingHistoryContract
-import com.liangfeng.mbrowser.event.BookmarkEvent
+import com.liangfeng.mbrowser.event.browserhistory.BookmarkEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryModule
-import com.liangfeng.mbrowser.view.fragment.BookmarkFragment
-import com.orhanobut.logger.Logger
+import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -16,10 +15,10 @@ import org.greenrobot.eventbus.EventBus
 class BookmarkFragmentPresenter : BrowsingHistoryContract.Presenter {
 
     private var module: BrowsingHistoryModule? = null
-    private var view: BookmarkFragment? = null
+    private var view: BrowsingHistoryFragment? = null
 
 
-    constructor(view: BookmarkFragment) {
+    constructor(view: BrowsingHistoryFragment) {
         this.module = BrowsingHistoryModule()
         view?.setPresenter(this)
     }
@@ -35,10 +34,14 @@ class BookmarkFragmentPresenter : BrowsingHistoryContract.Presenter {
                 var event = BookmarkEvent(false, null)
                 EventBus.getDefault().post(event)
             }
-
         })
+    }
+    override fun clear() {
 
+    }
 
+    override fun delete(timeDetails:String) {
+        module?.deleteItem(timeDetails)
     }
 
 

@@ -10,6 +10,9 @@ class BrowsingHistoryBean : DataSupport() {
     var url: String? = ""
     var title: String? = ""
     var time: String? = ""
+    var timeDetails: String? = ""
+    var isSelect: Boolean = false
+    var isRemove: Boolean = false
 
     var position: Int? = -1
 
@@ -22,11 +25,9 @@ class BrowsingHistoryBean : DataSupport() {
         } else {
             return position == 0
         }
-//        return position == groupSize - 1 && position!! > 0
     }
 
     fun isLastViewInGroup(): Boolean {//展示的shi反转的集合
-//        return position == groupSize?.minus(1) && position!! >= 0
         return position == 0
     }
 

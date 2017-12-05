@@ -70,12 +70,6 @@ class SectionDecoration : RecyclerView.ItemDecoration {
                 outRect?.top = mDividerHeight
             }
         }
-        //
-        //
-        //
-        //
-        //
-
     }
 
     //绘制屏幕上显示的itemView时调用
@@ -83,7 +77,6 @@ class SectionDecoration : RecyclerView.ItemDecoration {
         super.onDrawOver(c, parent, state)
         //遍历所有的ItemView
         var childCount = parent?.childCount
-//        Logger.e("childCount:" + childCount)
         var account = 0
         while (account < childCount!!) {
             //获取View
@@ -116,7 +109,6 @@ class SectionDecoration : RecyclerView.ItemDecoration {
                     }
                     //顶部位置+header高度（向下）
                     var bottom = mHeaderHeight?.let { top?.plus(it) }
-
                     drawHeader(c, top?.toFloat(), right, bottom?.toInt(), left, info)
                 }
             }
@@ -126,10 +118,8 @@ class SectionDecoration : RecyclerView.ItemDecoration {
 
     //绘制header
     private fun drawHeader(c: Canvas?, top: Float?, right: Int?, bottom: Int?, left: Int?, info: BrowsingHistoryBean?) {
-        //                    c?.drawRect(left?.toFloat()!!, top?.toFloat()!!, right?.toFloat()!!, bottom?.toFloat()!!, mPaint)
         c?.drawRect(0f, top?.toFloat()!!, right?.toFloat()!!, bottom?.toFloat()!!, mPaint)
 
-        //                    var titleX: Float = left?.plus(mTextOffset?.toFloat()!!)!!
         var titleX: Float = left?.toFloat()!!
         var titleY: Float = bottom?.minus(mFontMetrics?.descent!!)!!
 

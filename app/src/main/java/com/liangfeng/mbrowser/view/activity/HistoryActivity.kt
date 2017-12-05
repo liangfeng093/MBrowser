@@ -1,18 +1,25 @@
 package com.liangfeng.mbrowser.view.activity
 
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.widget.LinearLayout
 import com.liangfeng.mbrowser.R
+import com.liangfeng.mbrowser.event.browserhistory.DeleteHistoryEvent
+import com.liangfeng.mbrowser.event.browserhistory.HistoryFinishEvent
+import com.liangfeng.mbrowser.event.browserhistory.LongClickEvent
 import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
-import com.liangfeng.mbrowser.view.fragment.BookmarkFragment
-import com.orhanobut.logger.Logger
+import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
 import kotlinx.android.synthetic.main.activity_history.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.lang.reflect.Field
 
 /**
@@ -29,19 +36,15 @@ class HistoryActivity : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
-        var fragments = listOf<Fragment>(BookmarkFragment(), BookmarkFragment())
+        var fragments = listOf<Fragment>(BrowsingHistoryFragment(), BrowsingHistoryFragment())
         vpHistory.adapter = BookmarkPagerAdapter(supportFragmentManager, fragments)
 
-        tabLayout.post {
-            setIndicator(tabLayout, 35, 35)
-        }
-
-
+        /* tabLayout.post {
+             setIndicator(tabLayout, 35, 35)
+         }*/
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.addTab(tabLayout.newTab())
         tabLayout.setupWithViewPager(vpHistory)
-
-
         tabLayout.getTabAt(0)?.setText(resources.getString(R.string.bookmark))
         tabLayout.getTabAt(1)?.setText(resources.getString(R.string.history))
 
@@ -51,6 +54,19 @@ class HistoryActivity : BaseActivity() {
     override fun setListener() {
         titleBar?.setNavigationOnClickListener {
             onBackPressed()
+        }
+        tvFinish?.setOnClickListener {
+            tvFinish?.visibility = View.GONE
+            tvClear?.setText(resources?.getString(R.string.clear))
+            tvClear?.setTextColor(Color.BLACK)
+            EventBus.getDefault().post(HistoryFinishEvent())
+        }
+        tvClear?.setOnClickListener {
+            if (tvClear?.text?.equals(resources?.getString(R.string.clear))!!) {
+
+            } else if (tvClear?.text?.equals(resources?.getString(R.string.delete))!!) {
+                EventBus.getDefault().post(DeleteHistoryEvent())
+            }
         }
     }
 
@@ -83,6 +99,22 @@ class HistoryActivity : BaseActivity() {
             i++
         }
         Log.e(mTAG, "setIndicator")
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun showStatus(event: LongClickEvent) {
+        tvClear?.setText(resources?.getString(R.string.delete))
+        tvClear?.setTextColor(Color.RED)
+        tvFinish?.visibility = View.VISIBLE
     }
 }

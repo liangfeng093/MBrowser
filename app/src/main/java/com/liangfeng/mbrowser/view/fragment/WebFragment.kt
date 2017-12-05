@@ -87,12 +87,16 @@ class WebFragment : BaseFragment {
                 bean?.title = title.toString()
                 bean?.url = view?.url
 
-                var time = RxTimeTool.getCurTimeString().subSequence(0, 10)
+//                var time = RxTimeTool.getCurTimeString().subSequence(0, 10)
+                var time = RxTimeTool.getCurTimeString()
+                bean?.timeDetails = time
+                time = time.subSequence(0, 10).toString()
                 var time1 = RxTimeTool.getCurTimeString().subSequence(11, 19)
                 var list = time.split("-")
                 var list1 = time1.split(":")
                 bean?.time = list[1] + "月" + list[2] + "日" + list1[1]
-                bean?.groupId = "->time" + list1[1]
+//                bean?.time = list[1] + "月" + list[2] + "日"
+//                bean?.groupId = "->time" + list1[1]
                 var count = DataSupport.where("time=?", bean?.time).count("BrowsingHistoryBean")
                 if (count <= 0) {
                     bean?.position = 0
@@ -104,10 +108,6 @@ class WebFragment : BaseFragment {
                 var isSave = bean?.save()
                 Log.e(mTAG, "bean:" + bean.toString())
                 Log.e(mTAG, "保存成功:" + isSave)
-//                Log.e(mTAG, "time:" + list[0] + "年" + list[1] + "月" + list[2] + "日")
-//                Log.e(mTAG, "time1:" + time1)
-//                Log.e(mTAG, "time2:" + RxTimeTool.getCurTimeString())
-
             }
 
             override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {

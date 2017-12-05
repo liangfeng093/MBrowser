@@ -13,6 +13,14 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivSelectItemBookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/bookmark_select_no" />
+
+        <ImageView
             android:id="@+id/ivItemBookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

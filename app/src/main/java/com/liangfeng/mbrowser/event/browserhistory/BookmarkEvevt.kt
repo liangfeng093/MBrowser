@@ -1,4 +1,4 @@
-package com.liangfeng.mbrowser.event
+package com.liangfeng.mbrowser.event.browserhistory
 
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 

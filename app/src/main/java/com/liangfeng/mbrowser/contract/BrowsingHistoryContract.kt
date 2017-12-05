@@ -35,5 +35,14 @@ interface BrowsingHistoryContract {
 
     interface Presenter : BasePresenter {
         fun getData()
+        /**
+         * 清空历史记录
+         */
+        fun clear()
+
+        /**
+         * 删除一条历史记录
+         */
+        fun delete(timeDetails: String)
     }
 }
