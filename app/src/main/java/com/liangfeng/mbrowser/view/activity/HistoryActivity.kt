@@ -1,5 +1,7 @@
 package com.liangfeng.mbrowser.view.activity
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
@@ -12,11 +14,13 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import com.liangfeng.mbrowser.R
+import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.event.browserhistory.DeleteHistoryEvent
 import com.liangfeng.mbrowser.event.browserhistory.HistoryFinishEvent
 import com.liangfeng.mbrowser.event.browserhistory.LongClickEvent
 import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
 import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_history.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -51,15 +55,26 @@ class HistoryActivity : BaseActivity() {
         setSupportActionBar(titleBar)
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun setListener() {
         titleBar?.setNavigationOnClickListener {
             onBackPressed()
         }
         tvFinish?.setOnClickListener {
-            tvFinish?.visibility = View.GONE
+            //            var animator = ObjectAnimator.ofFloat(tvFinish, "translationX", -50f)
+//            animator?.setDuration(500)
+//            animator?.
+            tvFinish?.animate()
+                    ?.translationX(30f)
+                    ?.alpha(0f)
+                    ?.setDuration(400)?.withEndAction {
+                tvFinish?.visibility = View.GONE
+            }
             tvClear?.setText(resources?.getString(R.string.clear))
             tvClear?.setTextColor(Color.BLACK)
             EventBus.getDefault().post(HistoryFinishEvent())
+
+
         }
         tvClear?.setOnClickListener {
             if (tvClear?.text?.equals(resources?.getString(R.string.clear))!!) {
@@ -111,10 +126,18 @@ class HistoryActivity : BaseActivity() {
         EventBus.getDefault().unregister(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     @Subscribe
     fun showStatus(event: LongClickEvent) {
+        Logger.e("showStatus")
         tvClear?.setText(resources?.getString(R.string.delete))
         tvClear?.setTextColor(Color.RED)
         tvFinish?.visibility = View.VISIBLE
+        tvFinish?.animate()
+                ?.translationX(-30f)
+                ?.alpha(1f)
+                ?.setDuration(400)?.withEndAction {
+
+        }
     }
 }
