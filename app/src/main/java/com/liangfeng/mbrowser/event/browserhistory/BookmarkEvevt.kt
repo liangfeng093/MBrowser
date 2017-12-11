@@ -8,9 +8,12 @@ import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
  */
 class BookmarkEvent {
 
-    constructor(hasData: Boolean?, list: MutableList<BrowsingHistoryBean>?) {
+    var isRefresh: Boolean? = false
+
+    constructor(isRefresh: Boolean?, hasData: Boolean?, list: MutableList<BrowsingHistoryBean>?) {
         this.hasData = hasData
         this.list = list
+        this.isRefresh = isRefresh
     }
 
     var hasData: Boolean? = false

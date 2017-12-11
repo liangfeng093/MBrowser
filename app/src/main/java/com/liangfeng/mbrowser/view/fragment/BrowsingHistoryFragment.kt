@@ -5,10 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.TextView
 import com.liangfeng.mbrowser.R
 import com.liangfeng.mbrowser.contract.BrowsingHistoryContract
 import com.liangfeng.mbrowser.event.browserhistory.BookmarkEvent
+import com.liangfeng.mbrowser.event.browserhistory.ClearHistoryEvent
 import com.liangfeng.mbrowser.event.browserhistory.DeleteHistoryEvent
 import com.liangfeng.mbrowser.event.browserhistory.HistoryFinishEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
@@ -103,29 +105,54 @@ class BrowsingHistoryFragment : BaseFragment(), BrowsingHistoryContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun receive(event: BookmarkEvent) {
-        list = event.list?.asReversed()
-        floatItem?.setText(list?.get(0)?.time)
-        adapter = BookmarkAdapter(this, R.layout.item_bookmark, list)
-        rvBookmark?.adapter = adapter
+        if (event?.hasData!!) {
+            if (list == null && adapter == null) {
+                list = event.list?.asReversed()
+                adapter = BookmarkAdapter(this, R.layout.item_bookmark, list)
+                rvBookmark?.adapter = adapter
+            } else if (event?.isRefresh!!) {
+                adapter?.isSelect = true
+                list?.clear()
+                event.list?.asReversed()?.let { list?.addAll(it) }
+             /*   list?.forEach {
+                    it?.isSelect = false
+                    it?.isShowStatus = true
+                }*/
+                list?.forEach {
+                    Logger.e("it:" + it)
+                }
+                adapter?.notifyDataSetChanged()
+
+            }
+        }
     }
 
     var list: MutableList<BrowsingHistoryBean>? = null
 
     @Subscribe
-    fun delete(event: DeleteHistoryEvent) {
-        list?.forEach {
-            if (it?.isRemove) {
-                list?.remove(it)
-                mPresenter?.delete(it?.timeDetails!!)
-            }
-        }
+    fun clear(event: ClearHistoryEvent) {
+        list?.clear()
+        mPresenter?.clear()
         adapter?.notifyDataSetChanged()
     }
 
     @Subscribe
+    fun delete(event: DeleteHistoryEvent) {
+        list?.forEach {
+            if (it?.isRemove) {
+                mPresenter?.delete(it)
+            }
+        }
+//        Logger.e("delete")
+        showDate()
+    }
+
+    @Subscribe
     fun finish(event: HistoryFinishEvent) {
-        Logger.e("HistoryFinishEvent")
-        list?.forEach { it?.isSelect = false }
+        list?.forEach {
+            it?.isSelect = false
+            it?.isShowStatus = false
+        }
         adapter?.isSelect = false
         adapter?.notifyDataSetChanged()
     }

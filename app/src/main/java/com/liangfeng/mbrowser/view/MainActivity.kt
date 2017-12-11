@@ -3,6 +3,7 @@ package com.liangfeng.mbrowser.view
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.liangfeng.mbrowser.view.fragment.HomeFragment
 import com.liangfeng.mbrowser.view.fragment.SearchFragment
 import com.liangfeng.mbrowser.view.fragment.WebFragment
 import com.liangfeng.mbrowser.widget.MenuDialogFragment
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -66,7 +68,7 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-
+    var currentFragment: Fragment? = null
     var homeFragment: HomeFragment? = null
     var searchFragment: SearchFragment? = null
     var webFragment: WebFragment? = null
@@ -79,6 +81,7 @@ class MainActivity : BaseActivity() {
         homeFragment = HomeFragment()
         searchFragment = SearchFragment()
 
+        currentFragment = homeFragment
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.contains, homeFragment)
@@ -108,6 +111,7 @@ class MainActivity : BaseActivity() {
                         .beginTransaction()
                         .replace(R.id.contains, homeFragment)
                         .commit()
+                currentFragment = homeFragment
                 tools.visibility = View.VISIBLE
             }
 
@@ -125,7 +129,6 @@ class MainActivity : BaseActivity() {
                 var url: String = ""
                 if (event.url.isEmpty()) {
                     url = Url.BAI_DU + "wd=" + event.keyWords//拼接关键字
-
                 } else {
                     url = event.url
                 }
@@ -134,6 +137,7 @@ class MainActivity : BaseActivity() {
                         .beginTransaction()
                         .replace(R.id.contains, webFragment)
                         .commitAllowingStateLoss()//允许状态值丢失
+                currentFragment = webFragment
 //                        .commit()
             }
         }
@@ -143,11 +147,21 @@ class MainActivity : BaseActivity() {
     var firstTime = 0L
     override fun onBackPressed() {
         secondTime = System.currentTimeMillis()
-        if (secondTime - firstTime > 2000) {
-            Toast.makeText(MainActivity@ this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            firstTime = secondTime;
+        if (webFragment?.webView?.canGoBack()!!) {
+            webFragment?.webView?.goBack()
         } else {
-            System.exit(0);
+            if (currentFragment is HomeFragment) {
+                if (secondTime - firstTime > 2000) {
+                    Toast.makeText(MainActivity@ this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    firstTime = secondTime
+                } else {
+                    System.exit(0)
+                }
+            } else {
+                var event = ReplaceFragmentEvent()
+                event?.type = ReplaceFragmentEvent.HOME_FRAGMENT
+                EventBus.getDefault().post(event)
+            }
         }
     }
 

@@ -7,12 +7,16 @@ import org.litepal.crud.DataSupport
  * Email:liangfeng093@gmail.com
  */
 class BrowsingHistoryBean : DataSupport() {
+
+    var id: Long = 0
+
     var url: String? = ""
     var title: String? = ""
     var time: String? = ""
     var timeDetails: String? = ""
     var isSelect: Boolean = false
     var isRemove: Boolean = false
+    var isShowStatus: Boolean = false
 
     var position: Int? = -1
 
@@ -31,9 +35,8 @@ class BrowsingHistoryBean : DataSupport() {
         return position == 0
     }
 
-    override
-    fun toString(): String {
-        return "BrowsingHistoryBean(url=$url, title='$title')"
+    override fun toString(): String {
+        return "BrowsingHistoryBean(title=$title, isSelect=$isSelect, isRemove=$isRemove, position=$position)"
     }
 
 

@@ -1,5 +1,6 @@
 package com.liangfeng.mbrowser.view.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -9,6 +10,7 @@ import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
 import com.liangfeng.mbrowser.event.browserhistory.LongClickEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
+import com.orhanobut.logger.Logger
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -17,17 +19,19 @@ import org.greenrobot.eventbus.EventBus
  */
 class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder>, BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemClickListener {
 
+    val mTAG = "BookmarkAdapter"
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         var bean = list?.get(position)
+
         if (isSelect) {
-            if (bean?.isSelect!!) {
+            if (!bean?.isSelect!!) {
                 view?.findViewById<ImageView>(R.id.ivSelectItemBookmark)?.setImageResource(R.mipmap.bookmark_select_yes)
-                bean?.isSelect = false
+                bean?.isSelect = true
                 bean?.isRemove = true
             } else {
                 view?.findViewById<ImageView>(R.id.ivSelectItemBookmark)?.setImageResource(R.mipmap.bookmark_select_no)
                 bean?.isRemove = false
-                bean?.isSelect = true
+                bean?.isSelect = false
             }
         } else {
             var event = ReplaceFragmentEvent()
@@ -36,12 +40,13 @@ class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder>, B
             EventBus.getDefault().post(event)
             mFragment?.activity?.onBackPressed()
         }
+        Log.e(mTAG, "onItemClick》》》bean:" + bean)
     }
 
     var isSelect: Boolean = false
     override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int): Boolean {
         isSelect = true
-        list?.forEach { it?.isSelect = true }
+        list?.forEach { it?.isShowStatus = true }
         notifyDataSetChanged()
         var event = LongClickEvent()
 //        event?.isShow = true
@@ -67,7 +72,8 @@ class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder>, B
 
     override fun convert(helper: BaseViewHolder?, item: BrowsingHistoryBean?) {
         helper?.setText(R.id.tvItemBookmark, item?.title)
-        if (item?.isSelect!!) {//显示选中按钮
+//        Log.e(mTAG, "convert》》》bean:" + item?.toString())
+        if (item?.isShowStatus!!) {//显示选中按钮
             helper?.setVisible(R.id.ivSelectItemBookmark, true)
         } else {//隐藏选中按钮
             helper?.getView<ImageView>(R.id.ivSelectItemBookmark)?.visibility = View.GONE

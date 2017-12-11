@@ -4,8 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.DialogFragment
+import android.support.v4.view.animation.LinearOutSlowInInterpolator
+import android.transition.Slide
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -27,6 +31,8 @@ class MenuDialogFragment : DialogFragment {
         this.context1 = context1
     }
 
+    var slide: Slide? = null
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // 使用不带Theme的构造器, 获得的dialog边框距离屏幕仍有几毫米的缝隙。
         var dialog = Dialog(context1, R.style.BottomDialog)
@@ -34,9 +40,12 @@ class MenuDialogFragment : DialogFragment {
         dialog.setContentView(R.layout.dialog_menu)
         dialog.setCanceledOnTouchOutside(true)// 外部点击
 
+
+
         var gridView = dialog?.findViewById<GridView>(R.id.gvMenu)
         gridView?.adapter = context1?.let { ItemAdapter(it) }
         gridView?.setOnItemClickListener { adapterView, view, i, l ->
+
             Log.e(TAG, "POSITION:" + i)
             var intent: Intent? = null
             when (i) {

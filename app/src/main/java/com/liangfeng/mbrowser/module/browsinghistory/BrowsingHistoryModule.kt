@@ -1,5 +1,7 @@
 package com.liangfeng.mbrowser.module.browsinghistory
 
+import android.content.ContentValues
+import android.util.Log
 import com.liangfeng.mbrowser.base.BaseModule
 import com.orhanobut.logger.Logger
 import org.litepal.crud.DataSupport
@@ -32,8 +34,29 @@ class BrowsingHistoryModule {
         }
     }
 
-    fun deleteItem(timeDetails:String){
-        DataSupport.deleteAll(BrowsingHistoryBean::class.java,"timeDetails=?",timeDetails)
+    val mTAG = "BrowsingHistoryModule"
+    fun deleteItem(item: BrowsingHistoryBean) {
+        var result = DataSupport.deleteAll(BrowsingHistoryBean::class.java, "timeDetails=?", item?.timeDetails)
+        var list = DataSupport.where("time=?", item?.time).find(BrowsingHistoryBean::class.java)
+        var i = 0
+        while (i < list?.size!!) {
+            var bean = list?.get(i)
+            var values = ContentValues()
+            values?.put("position", i)
+            DataSupport.update(BrowsingHistoryBean::class.java, values, bean?.id!!)
+            i++
+        }
+//        Logger.e("deleteItem>>>result:" + result)
+        Log.e(mTAG, "size:" + DataSupport.findAll(BrowsingHistoryBean::class.java).size)
+    }
+
+    fun find(): MutableList<BrowsingHistoryBean> {
+        return DataSupport.findAll(BrowsingHistoryBean::class.java)
+    }
+
+    fun clear() {
+        var result = DataSupport.deleteAll(BrowsingHistoryBean::class.java)
+        Logger.e("clear>>>result:" + result)
     }
 
 }

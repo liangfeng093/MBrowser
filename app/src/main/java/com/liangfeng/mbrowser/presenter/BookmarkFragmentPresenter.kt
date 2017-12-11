@@ -6,6 +6,7 @@ import com.liangfeng.mbrowser.event.browserhistory.BookmarkEvent
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryModule
 import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
+import com.orhanobut.logger.Logger
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -13,6 +14,7 @@ import org.greenrobot.eventbus.EventBus
  * Email:liangfeng093@gmail.com
  */
 class BookmarkFragmentPresenter : BrowsingHistoryContract.Presenter {
+
 
     private var module: BrowsingHistoryModule? = null
     private var view: BrowsingHistoryFragment? = null
@@ -23,27 +25,39 @@ class BookmarkFragmentPresenter : BrowsingHistoryContract.Presenter {
         view?.setPresenter(this)
     }
 
+    var isFirst = true
     override fun getData() {
         module?.getBrowsingHistory(object : BaseModule.GetLocalCallback<MutableList<BrowsingHistoryBean>> {
             override fun onSuccess(t: MutableList<BrowsingHistoryBean>) {
-                var event = BookmarkEvent(true, t)
-                EventBus.getDefault().post(event)
+//                var event: BookmarkEvent? = null
+                if (isFirst) {
+                    isFirst = false
+                    var event = BookmarkEvent(false, true, t)
+                    EventBus.getDefault().post(event)
+                } else {
+                    var event = BookmarkEvent(true, true, t)
+                    EventBus.getDefault().post(event)
+                }
             }
 
             override fun onFail() {
-                var event = BookmarkEvent(false, null)
-                EventBus.getDefault().post(event)
+//                var event = BookmarkEvent(false, false, null)
+//                EventBus.getDefault().post(event)
             }
         })
     }
+
     override fun clear() {
-
+        module?.clear()
     }
 
-    override fun delete(timeDetails:String) {
-        module?.deleteItem(timeDetails)
+    override fun delete(item: BrowsingHistoryBean) {
+        module?.deleteItem(item)
     }
 
+    override fun find(): MutableList<BrowsingHistoryBean> {
+        return module?.find()!!
+    }
 
     override fun start() {
 

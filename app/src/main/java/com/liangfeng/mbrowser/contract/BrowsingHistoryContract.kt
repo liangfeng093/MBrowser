@@ -2,6 +2,7 @@ package com.liangfeng.mbrowser.contract
 
 import com.liangfeng.mbrowser.base.BasePresenter
 import com.liangfeng.mbrowser.base.BaseView
+import com.liangfeng.mbrowser.module.browsinghistory.BrowsingHistoryBean
 import com.liangfeng.mbrowser.presenter.BookmarkFragmentPresenter
 
 /**
@@ -43,6 +44,10 @@ interface BrowsingHistoryContract {
         /**
          * 删除一条历史记录
          */
-        fun delete(timeDetails: String)
+        fun delete(item: BrowsingHistoryBean)
+        /**
+         * 查询所有
+         */
+        fun find():MutableList<BrowsingHistoryBean>
     }
 }

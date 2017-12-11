@@ -1,7 +1,5 @@
 package com.liangfeng.mbrowser.view.activity
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
@@ -14,13 +12,12 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import com.liangfeng.mbrowser.R
-import com.liangfeng.mbrowser.event.ReplaceFragmentEvent
+import com.liangfeng.mbrowser.event.browserhistory.ClearHistoryEvent
 import com.liangfeng.mbrowser.event.browserhistory.DeleteHistoryEvent
 import com.liangfeng.mbrowser.event.browserhistory.HistoryFinishEvent
 import com.liangfeng.mbrowser.event.browserhistory.LongClickEvent
 import com.liangfeng.mbrowser.view.adapter.BookmarkPagerAdapter
 import com.liangfeng.mbrowser.view.fragment.BrowsingHistoryFragment
-import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_history.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -78,7 +75,7 @@ class HistoryActivity : BaseActivity() {
         }
         tvClear?.setOnClickListener {
             if (tvClear?.text?.equals(resources?.getString(R.string.clear))!!) {
-
+                EventBus.getDefault().post(ClearHistoryEvent())
             } else if (tvClear?.text?.equals(resources?.getString(R.string.delete))!!) {
                 EventBus.getDefault().post(DeleteHistoryEvent())
             }
@@ -129,7 +126,6 @@ class HistoryActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     @Subscribe
     fun showStatus(event: LongClickEvent) {
-        Logger.e("showStatus")
         tvClear?.setText(resources?.getString(R.string.delete))
         tvClear?.setTextColor(Color.RED)
         tvFinish?.visibility = View.VISIBLE
