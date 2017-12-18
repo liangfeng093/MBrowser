@@ -152,7 +152,7 @@ class MainActivity : BaseActivity() {
         } else {
             if (currentFragment is HomeFragment) {
                 if (secondTime - firstTime > 2000) {
-                    Toast.makeText(MainActivity@ this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity@ this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
                     firstTime = secondTime
                 } else {
                     System.exit(0)

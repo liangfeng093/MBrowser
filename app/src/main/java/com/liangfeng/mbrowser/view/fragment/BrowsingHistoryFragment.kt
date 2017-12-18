@@ -114,10 +114,9 @@ class BrowsingHistoryFragment : BaseFragment(), BrowsingHistoryContract.View {
                 adapter?.isSelect = true
                 list?.clear()
                 event.list?.asReversed()?.let { list?.addAll(it) }
-             /*   list?.forEach {
-                    it?.isSelect = false
+                list?.forEach {
                     it?.isShowStatus = true
-                }*/
+                }
                 list?.forEach {
                     Logger.e("it:" + it)
                 }
@@ -143,14 +142,12 @@ class BrowsingHistoryFragment : BaseFragment(), BrowsingHistoryContract.View {
                 mPresenter?.delete(it)
             }
         }
-//        Logger.e("delete")
         showDate()
     }
 
     @Subscribe
     fun finish(event: HistoryFinishEvent) {
         list?.forEach {
-            it?.isSelect = false
             it?.isShowStatus = false
         }
         adapter?.isSelect = false

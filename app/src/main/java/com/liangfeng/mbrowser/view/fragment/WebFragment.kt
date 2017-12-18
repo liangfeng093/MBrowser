@@ -94,8 +94,8 @@ class WebFragment : BaseFragment {
                 var time1 = RxTimeTool.getCurTimeString().subSequence(11, 19)
                 var list = time.split("-")
                 var list1 = time1.split(":")
-//                bean?.time = list[1] + "月" + list[2] + "日" + list1[1]
-                bean?.time = list1[0] + "时" + list1[1] + "分"
+                bean?.time = list[1] + "月" + list[2] + "日" + list1[1]
+//                bean?.time = list1[0] + "时" + list1[1] + "分"
 //                bean?.time = list[1] + "月" + list[2] + "日"
 //                bean?.groupId = "->time" + list1[1]
                 var id = DataSupport.count("BrowsingHistoryBean")

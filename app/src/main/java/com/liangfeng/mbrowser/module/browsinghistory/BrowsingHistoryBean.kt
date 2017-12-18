@@ -14,7 +14,7 @@ class BrowsingHistoryBean : DataSupport() {
     var title: String? = ""
     var time: String? = ""
     var timeDetails: String? = ""
-    var isSelect: Boolean = false
+//    var isSelect: Boolean = false
     var isRemove: Boolean = false
     var isShowStatus: Boolean = false
 
@@ -35,9 +35,9 @@ class BrowsingHistoryBean : DataSupport() {
         return position == 0
     }
 
-    override fun toString(): String {
+    /*override fun toString(): String {
         return "BrowsingHistoryBean(title=$title, isSelect=$isSelect, isRemove=$isRemove, position=$position)"
     }
-
+*/
 
 }

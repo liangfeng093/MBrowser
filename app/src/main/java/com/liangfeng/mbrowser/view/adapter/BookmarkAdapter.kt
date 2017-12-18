@@ -24,14 +24,13 @@ class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder>, B
         var bean = list?.get(position)
 
         if (isSelect) {
-            if (!bean?.isSelect!!) {
+
+            if (!bean?.isRemove!!) {
                 view?.findViewById<ImageView>(R.id.ivSelectItemBookmark)?.setImageResource(R.mipmap.bookmark_select_yes)
-                bean?.isSelect = true
                 bean?.isRemove = true
             } else {
                 view?.findViewById<ImageView>(R.id.ivSelectItemBookmark)?.setImageResource(R.mipmap.bookmark_select_no)
                 bean?.isRemove = false
-                bean?.isSelect = false
             }
         } else {
             var event = ReplaceFragmentEvent()
@@ -70,11 +69,14 @@ class BookmarkAdapter : BaseQuickAdapter<BrowsingHistoryBean, BaseViewHolder>, B
         setOnItemLongClickListener(this)
     }
 
+
+
     override fun convert(helper: BaseViewHolder?, item: BrowsingHistoryBean?) {
         helper?.setText(R.id.tvItemBookmark, item?.title)
 //        Log.e(mTAG, "convert》》》bean:" + item?.toString())
         if (item?.isShowStatus!!) {//显示选中按钮
             helper?.setVisible(R.id.ivSelectItemBookmark, true)
+            helper?.getView<ImageView>(R.id.ivSelectItemBookmark)?.setImageResource(R.mipmap.bookmark_select_no)
         } else {//隐藏选中按钮
             helper?.getView<ImageView>(R.id.ivSelectItemBookmark)?.visibility = View.GONE
         }
